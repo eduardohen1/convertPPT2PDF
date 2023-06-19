@@ -61,6 +61,9 @@ public class PPTXToPDFConverter {
             //Criar o arquivo de saida
             PDDocument pdf = new PDDocument();
             for(XSLFSlide slide : ppt.getSlides()){
+
+                System.out.println("Convertendo slide: " + slide.getSlideNumber());
+
                 //definir a largura e altura da imagem
                 int slideWidth = (int) ppt.getPageSize().getWidth();
                 int slideHeight = (int) ppt.getPageSize().getHeight();
@@ -71,12 +74,15 @@ public class PPTXToPDFConverter {
                 PDPageContentStream content = new PDPageContentStream(pdf, page);
 
                 //Converter o slide para uma imagem
-                BufferedImage img = new BufferedImage(slideWidth, slideHeight, BufferedImage.TYPE_INT_RGB);
+                BufferedImage img = new BufferedImage(slideWidth, slideHeight, BufferedImage.TYPE_INT_ARGB);
                 Graphics2D graphics = img.createGraphics();
                 graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 graphics.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
                 graphics.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
                 graphics.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
+                graphics.setRenderingHint(RenderingHints.KEY_DITHERING, RenderingHints.VALUE_DITHER_ENABLE);
+                graphics.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
+                graphics.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_NORMALIZE);
                 graphics.setColor(Color.white);
                 graphics.clearRect(0, 0, slideWidth, slideHeight);
                 slide.draw(graphics);
