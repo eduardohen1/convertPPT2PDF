@@ -64,9 +64,14 @@ public class PPTXToPDFConverter {
 
                 System.out.println("Convertendo slide: " + slide.getSlideNumber());
 
+                //utilizando dpi
+                int dpi = 300; //definir a resolução da imagem
+
                 //definir a largura e altura da imagem
-                int slideWidth = (int) ppt.getPageSize().getWidth();
-                int slideHeight = (int) ppt.getPageSize().getHeight();
+                /*int slideWidth = (int) ppt.getPageSize().getWidth();
+                int slideHeight = (int) ppt.getPageSize().getHeight();*/
+                int slideWidth = (int) (ppt.getPageSize().getWidth()*dpi/72); //converter de ponto para pixel
+                int slideHeight = (int) (ppt.getPageSize().getHeight()*dpi/72); //converter de ponto para pixel
 
                 //Criar uma nova página no PDF e definir seu tamanho
                 PDPage page = new PDPage(new PDRectangle(slideWidth, slideHeight));
